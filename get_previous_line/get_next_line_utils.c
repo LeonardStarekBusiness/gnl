@@ -12,13 +12,6 @@
 
 #include "get_next_line.h"
 
-void	clear(void **ptr)
-{
-	if (ptr && *ptr)
-		free(*ptr);
-	*ptr = NULL;
-}
-
 char	*ft_strdup(char *src)
 {
 	char	*dest;
@@ -39,6 +32,18 @@ char	*ft_strdup(char *src)
 	}
 	dest[c] = 0;
 	return (dest);
+}
+
+void	clear(char *stash)
+{
+	size_t	i;
+
+	i = 0;
+	while (i <= BUFFER_SIZE)
+	{
+		((unsigned char *)stash)[i] = 0;
+		i++;
+	}
 }
 
 size_t	safe_strlen(char const *str)
@@ -102,6 +107,6 @@ char	*join_and_free(char *s1, char *s2)
 		rstr[i++] = s2[pos[1]++];
 	rstr[i] = 0;
 	if (s2 && s1)
-		clear((void **)&s1);
+		free(s1);
 	return (rstr);
 }

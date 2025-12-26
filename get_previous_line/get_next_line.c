@@ -45,7 +45,7 @@ char	*amend(char *str)
 		rstr[i++] = str[j++];
 	rstr[i++] = str[j++];
 	rstr[i] = 0;
-	clear((void **)&str);
+	free(str);
 	str = NULL;
 	return (rstr);
 }
@@ -81,15 +81,15 @@ char	*getter(int fd)
 	{
 		br = read(fd, readbuf, BUFFER_SIZE);
 		if (br == -1)
-			return (stash[0] = 0, free(buffer), free(readbuf), NULL);
+			return (clear(stash), free(buffer), free(readbuf), NULL);
 		else if (br == 0 && buffer[0] != 0)
-			return (stash[0] = 0, free(readbuf), buffer);
+			return (clear(stash), free(readbuf), buffer);
 		else if (br == 0 && buffer[0] == 0)
 			return (free(buffer), free(readbuf), NULL);
 		readbuf[br] = 0;
 		buffer = join_and_free(buffer, readbuf);
 		if (!buffer)
-			return (stash[0] = 0, free(readbuf), NULL);
+			return (clear(stash), free(readbuf), NULL);
 	}
 	take_rest(stash, buffer);
 	return (free(readbuf), amend(buffer));

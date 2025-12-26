@@ -24,8 +24,8 @@
 # endif
 
 char	*get_next_line(int fd);
+void	clear(char *stash);
 char	*ft_strdup(char *src);
-void	clear(void **ptr);
 char	*join_and_free(char *s1, char *s2);
 size_t	safe_strlen(char const *str);
 void	*ft_calloc(size_t nmemb, size_t size);
